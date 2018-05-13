@@ -1,0 +1,4 @@
+$d_font_size: 50;
+@function px($px){
+    @return $px/$d_font_size*1rem;
+}

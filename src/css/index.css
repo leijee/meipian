@@ -1,0 +1,531 @@
+html {
+  color: #000;
+  background: #fff;
+  overflow-y: scroll;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%; }
+
+html * {
+  outline: 0;
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+
+html, body {
+  font-family: sans-serif;
+  width: 100%;
+  height: 100%; }
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  margin: 0;
+  padding: 0; }
+
+input, select, textarea {
+  font-size: 100%; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+fieldset, img {
+  border: 0; }
+
+abbr, acronym {
+  border: 0;
+  font-variant: normal; }
+
+del {
+  text-decoration: line-through; }
+
+address, caption, cite, code, dfn, em, th, var {
+  font-style: normal;
+  font-weight: 500; }
+
+ol, ul {
+  list-style: none; }
+
+caption, th {
+  text-align: left; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: 500; }
+
+q:before, q:after {
+  content: ''; }
+
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+sup {
+  top: -.5em; }
+
+sub {
+  bottom: -.25em; }
+
+a:hover {
+  text-decoration: underline; }
+
+ins, a {
+  text-decoration: none; }
+
+textarea {
+  resize: none; }
+
+body {
+  color: #666; }
+
+.page-index {
+  position: relative;
+  height: 100%;
+  margin: 0 auto;
+  max-width: 750px; }
+  .page-index .index-home {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #fff; }
+    .page-index .index-home .home-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 5.8rem; }
+      .page-index .index-home .home-header .header-title {
+        text-align: center;
+        color: #000;
+        font-size: 0.68rem; }
+      .page-index .index-home .home-header .header-text {
+        margin-top: 0.2rem;
+        text-align: center;
+        color: #666;
+        font-size: 0.48rem; }
+    .page-index .index-home .home-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 4.4rem;
+      background: #fafafc; }
+      .page-index .index-home .home-body .addPhoto {
+        position: relative; }
+        .page-index .index-home .home-body .addPhoto .addPhoto-btn {
+          position: absolute;
+          left: 0;
+          top: 0;
+          display: block;
+          width: 100%;
+          height: 100%;
+          z-index: 2;
+          opacity: 0; }
+      .page-index .index-home .home-body .btn-add {
+        position: relative;
+        margin: 0 auto;
+        width: 1.6rem;
+        height: 1.6rem;
+        line-height: 1.6rem;
+        text-align: center;
+        background: #3093f9;
+        color: #fff;
+        font-size: 0.8rem;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        z-index: 1; }
+      .page-index .index-home .home-body .text-add {
+        position: relative;
+        margin-top: 0.2rem;
+        text-align: center;
+        z-index: 1; }
+    .page-index .index-home .home-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2.2rem;
+      background: #fff;
+      border-top: 1px solid #eee; }
+      .page-index .index-home .home-footer .footer-item {
+        flex: 1;
+        text-align: center; }
+        .page-index .index-home .home-footer .footer-item:active {
+          background: #fafafc; }
+        .page-index .index-home .home-footer .footer-item:hover {
+          background: #fafafc; }
+        .page-index .index-home .home-footer .footer-item .btn-add {
+          position: relative;
+          margin: 0 auto;
+          width: 0.8rem;
+          height: 0.8rem;
+          line-height: 0.8rem;
+          text-align: center;
+          background: #3093f9;
+          color: #fff;
+          font-size: 0.4rem;
+          -webkit-border-radius: 50%;
+          -moz-border-radius: 50%;
+          border-radius: 50%;
+          z-index: 1; }
+  .page-index .index-second {
+    position: relative;
+    padding-bottom: 2rem;
+    height: 100%;
+    background: #f1f2f6; }
+    .page-index .index-second .second-header {
+      position: relative;
+      width: 100%;
+      height: 5.6rem; }
+      .page-index .index-second .second-header .bg_header {
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%; }
+      .page-index .index-second .second-header .header-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.1); }
+        .page-index .index-second .second-header .header-content .content-title {
+          padding: 0.2rem 0.3rem;
+          color: #fefefe;
+          font-size: 0.8rem;
+          font-weight: 700;
+          text-align: left;
+          background: rgba(255, 255, 255, 0);
+          border: none; }
+        .page-index .index-second .second-header .header-content .content-bottom {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 1.4rem; }
+          .page-index .index-second .second-header .header-content .content-bottom .bottom-item {
+            flex: 1;
+            color: #333; }
+            .page-index .index-second .second-header .header-content .content-bottom .bottom-item span {
+              background: #fff;
+              padding: 0.1rem 0.4rem;
+              border-radius: 0.3rem; }
+            .page-index .index-second .second-header .header-content .content-bottom .bottom-item.item-addMusic {
+              text-align: left;
+              padding: 0.2rem 0.2rem; }
+            .page-index .index-second .second-header .header-content .content-bottom .bottom-item.item-setBg {
+              text-align: right;
+              padding: 0.2rem 0.2rem; }
+    .page-index .index-second .second-body {
+      padding: 0.2rem 0.3rem; }
+      .page-index .index-second .second-body .body-item {
+        position: relative;
+        width: 100%;
+        /* .add-top,
+                .add-bottom
+                {
+                    padding: px(0) px(10);
+                    width: 100%;
+                    height: auto;
+                    text-align: center;
+
+                    .addItem{
+                        display: block;
+                        margin: 0 auto;
+                        width:px(66);
+                        height:px(40);
+                        line-height:px(40);
+                        color: #fff;
+                        background: #e2e3e8;
+                        font-size:px(20);
+                        text-align: center;
+                        font-style: normal;
+                        border-radius: px(15);
+                    }
+                }*/ }
+        .page-index .index-second .second-body .body-item .item-content {
+          position: relative;
+          margin-top: 0.2rem;
+          margin-bottom: 0.2rem;
+          height: 4.3rem;
+          background: #fff;
+          border-radius: 0.2rem;
+          border: 1px solid #dfe2e9; }
+          .page-index .index-second .second-body .body-item .item-content .close {
+            position: absolute;
+            left: 0.3rem;
+            top: 0.3rem;
+            width: 0.4rem;
+            height: 0.4rem;
+            background: #fff;
+            border-radius: 25px;
+            cursor: pointer;
+            z-index: 1; }
+          .page-index .index-second .second-body .body-item .item-content .close:before {
+            position: absolute;
+            content: '';
+            width: 0.4rem;
+            height: 1px;
+            background: #cbcdd9;
+            transform: rotate(45deg);
+            top: 0;
+            left: 0; }
+          .page-index .index-second .second-body .body-item .item-content .close:after {
+            content: '';
+            position: absolute;
+            width: 0.4rem;
+            height: 1px;
+            background: #cbcdd9;
+            transform: rotate(-45deg);
+            top: 0;
+            left: 0; }
+          .page-index .index-second .second-body .body-item .item-content .item-left {
+            position: absolute;
+            left: 0.7rem;
+            width: 3rem;
+            height: 100%; }
+            .page-index .index-second .second-body .body-item .item-content .item-left .left-item {
+              position: absolute;
+              left: 0;
+              top: 0.7rem;
+              width: 3rem;
+              height: 3rem;
+              background: #cbcdd9; }
+          .page-index .index-second .second-body .body-item .item-content .item-right {
+            position: absolute;
+            right: 0.6rem;
+            width: 9.8rem;
+            height: 100%; }
+            .page-index .index-second .second-body .body-item .item-content .item-right .right-item {
+              position: absolute;
+              right: 0;
+              top: 0.7rem;
+              padding: 0.18rem 0.2rem 0.2rem 0.2rem;
+              width: 9.8rem;
+              height: 3rem;
+              overflow: hidden;
+              color: #cbcdd9;
+              background: #fff;
+              -webkit-box-sizing: border-box;
+              -moz-box-sizing: border-box;
+              box-sizing: border-box;
+              line-height: 0.7rem;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-line-clamp: 4;
+              -webkit-box-orient: vertical;
+              border: none; }
+        .page-index .index-second .second-body .body-item .addItem {
+          display: block;
+          margin: 0 auto;
+          width: 1.32rem;
+          height: 0.8rem;
+          line-height: 0.8rem;
+          color: #fff;
+          background: #e2e3e8;
+          font-size: 0.4rem;
+          text-align: center;
+          font-style: normal;
+          border-radius: 0.3rem; }
+        .page-index .index-second .second-body .body-item .first-item .add-content {
+          display: block; }
+        .page-index .index-second .second-body .body-item .add-content {
+          display: none;
+          margin: 0 auto;
+          width: 10.6rem;
+          height: 2rem;
+          line-height: 2rem;
+          background: #fff;
+          border-radius: 0.6rem;
+          text-align: center; }
+          .page-index .index-second .second-body .body-item .add-content span {
+            display: inline-block;
+            margin: 0 0.8rem;
+            width: 1.1rem;
+            height: 0.8rem;
+            vertical-align: middle; }
+            .page-index .index-second .second-body .body-item .add-content span.icon-text {
+              background: url(../imgs/icon_text.png) no-repeat;
+              background-size: 100% 100%; }
+            .page-index .index-second .second-body .body-item .add-content span.icon-img {
+              background: url(../imgs/icon_img.png) no-repeat;
+              background-size: 100% 100%; }
+            .page-index .index-second .second-body .body-item .add-content span.icon-video {
+              background: url(../imgs/icon_video.png) no-repeat;
+              background-size: 100% 100%; }
+    .page-index .index-second .second-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      z-index: 10;
+      width: 100%;
+      height: 2rem;
+      font-size: 0.64rem;
+      color: #fff;
+      background: #57a7fe; }
+  .page-index .index-edit {
+    width: 100%;
+    position: relative;
+    height: 100%;
+    background: #f1f2f6; }
+    .page-index .index-edit .edit-content {
+      display: block;
+      padding: 0.3rem 0.4rem;
+      width: 100%;
+      height: 9rem;
+      font-size: 0.7rem;
+      box-sizing: border-box;
+      border: none; }
+    .page-index .index-edit .edit-num {
+      padding-left: 0.6rem;
+      height: 1.3rem;
+      line-height: 1.3rem;
+      color: #bfbfbf;
+      background: #f1f2f6; }
+    .page-index .index-edit .edit-btn {
+      padding-left: 0.6rem;
+      height: 2rem;
+      line-height: 2rem;
+      background: #f4f4f4;
+      border-top: 1px solid #d4d4d5;
+      border-bottom: 1px solid #e0e0e0; }
+      .page-index .index-edit .edit-btn .btn-submit {
+        font-size: 0.7rem;
+        color: #15ac13; }
+  .page-index .index-music {
+    position: relative;
+    padding-bottom: 2rem;
+    width: 100%;
+    height: 100%;
+    color: #020202;
+    background: #f1f2f6; }
+    .page-index .index-music .tab-list {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 1.8rem;
+      line-height: 1.8rem;
+      background: #fff;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      border-bottom: 1px solid #edeef3; }
+      .page-index .index-music .tab-list:after {
+        content: '';
+        display: block;
+        clear: both; }
+      .page-index .index-music .tab-list .tab-item {
+        float: left;
+        width: 50%;
+        text-align: center;
+        height: 100%; }
+        .page-index .index-music .tab-list .tab-item.active span {
+          color: #57a7fe;
+          border-bottom: 2px solid #57a7fe; }
+        .page-index .index-music .tab-list .tab-item span {
+          display: inline-block;
+          height: 99%;
+          font-size: 0.7rem;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box; }
+    .page-index .index-music .music-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.4rem;
+      padding-left: 0.6rem;
+      height: 3rem;
+      background: #fff; }
+      .page-index .index-music .music-item.selected:after {
+        content: '';
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        margin-top: -0.3rem;
+        z-index: 2;
+        width: 0.6rem;
+        height: 0.6rem;
+        background: url(../imgs/icon_selected.png) no-repeat;
+        background-size: 100% 100%; }
+      .page-index .index-music .music-item .item-title {
+        font-size: 0.6rem; }
+      .page-index .index-music .music-item .item-text {
+        font-size: 0.4rem;
+        color: #8c8c8c; }
+    .page-index .index-music .music-no.music-item {
+      height: 2rem; }
+    .page-index .index-music .music-select,
+    .page-index .index-music .music-search {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 1.8rem;
+      bottom: 0rem;
+      background: #fff; }
+    .page-index .index-music .music-select {
+      background: #f1f2f6;
+      padding-top: 0.4rem; }
+      .page-index .index-music .music-select .empty {
+        height: 2rem; }
+    .page-index .index-music .music-search {
+      background: #fff; }
+      .page-index .index-music .music-search .search-content {
+        position: relative;
+        margin: 0 auto;
+        padding: 0 0.4rem 0 1rem;
+        margin-top: 0.4rem;
+        width: 14.2rem;
+        height: 1.6rem;
+        background: #f1f2f6;
+        border-radius: 0.2rem;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box; }
+        .page-index .index-music .music-search .search-content .icon-search {
+          position: absolute;
+          left: 0.2rem;
+          top: 50%;
+          margin-top: -0.4rem;
+          display: block;
+          width: 0.74rem;
+          height: 0.74rem;
+          z-index: 2;
+          background: url(../imgs/icon_search.png) no-repeat;
+          background-size: 100% 100%; }
+        .page-index .index-music .music-search .search-content input {
+          display: block;
+          width: 100%;
+          height: 100%;
+          font-size: 0.6rem;
+          background: #f1f2f6;
+          box-sizing: border-box;
+          border: none; }
+    .page-index .index-music .music-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      z-index: 10;
+      width: 100%;
+      height: 2rem;
+      font-size: 0.64rem;
+      color: #fff;
+      background: #57a7fe; }
