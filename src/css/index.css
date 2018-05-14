@@ -40,7 +40,7 @@ address, caption, cite, code, dfn, em, th, var {
   font-style: normal;
   font-weight: 500; }
 
-ol, ul {
+ol, ul, li {
   list-style: none; }
 
 caption, th {
@@ -197,13 +197,16 @@ body {
         height: 100%;
         background: rgba(0, 0, 0, 0.1); }
         .page-index .index-second .second-header .header-content .content-title {
+          display: block;
           padding: 0.2rem 0.3rem;
+          width: 100%;
           color: #fefefe;
           font-size: 0.8rem;
           font-weight: 700;
           text-align: left;
           background: rgba(255, 255, 255, 0);
-          border: none; }
+          border: none;
+          box-sizing: border-box; }
         .page-index .index-second .second-header .header-content .content-bottom {
           position: absolute;
           left: 0;
@@ -446,12 +449,34 @@ body {
           box-sizing: border-box; }
     .page-index .index-music .music-item {
       position: relative;
-      display: flex;
-      align-items: center;
-      margin-bottom: 0.4rem;
+      display: block;
       padding-left: 0.6rem;
-      height: 3rem;
-      background: #fff; }
+      background: #fff;
+      box-sizing: content-box;
+      border-bottom: 0.4rem solid #f1f2f6; }
+      .page-index .index-music .music-item.music-list {
+        min-height: 3rem; }
+        .page-index .index-music .music-item.music-list .top-content {
+          display: flex;
+          align-items: center;
+          height: 3rem; }
+          .page-index .index-music .music-item.music-list .top-content.hasSelected {
+            height: 3rem; }
+            .page-index .index-music .music-item.music-list .top-content.hasSelected:after {
+              content: '';
+              position: absolute;
+              right: 1rem;
+              top: 50%;
+              margin-top: -0.3rem;
+              z-index: 2;
+              width: 0.6rem;
+              height: 0.6rem;
+              background: url(../imgs/icon_selected.png) no-repeat;
+              background-size: 100% 100%; }
+      .page-index .index-music .music-item.music-no {
+        display: flex;
+        align-items: center;
+        height: 2rem; }
       .page-index .index-music .music-item.selected:after {
         content: '';
         position: absolute;
@@ -464,12 +489,29 @@ body {
         background: url(../imgs/icon_selected.png) no-repeat;
         background-size: 100% 100%; }
       .page-index .index-music .music-item .item-title {
-        font-size: 0.6rem; }
+        font-size: 0.6rem;
+        padding-bottom: 0.2rem; }
       .page-index .index-music .music-item .item-text {
         font-size: 0.4rem;
         color: #8c8c8c; }
-    .page-index .index-music .music-no.music-item {
-      height: 2rem; }
+    .page-index .index-music .b-content-list {
+      width: 100%; }
+      .page-index .index-music .b-content-list .b-content-item {
+        position: relative;
+        height: 1.9rem;
+        line-height: 1.9rem;
+        border-bottom: 1px solid #e4e5ea; }
+        .page-index .index-music .b-content-list .b-content-item.selected:after {
+          content: '';
+          position: absolute;
+          right: 1rem;
+          top: 50%;
+          margin-top: -0.3rem;
+          z-index: 2;
+          width: 0.6rem;
+          height: 0.6rem;
+          background: url(../imgs/icon_selected.png) no-repeat;
+          background-size: 100% 100%; }
     .page-index .index-music .music-select,
     .page-index .index-music .music-search {
       position: absolute;

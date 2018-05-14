@@ -2,34 +2,14 @@
  * Created by Administrator on 2018/5/12.
  */
 (function () {
-
-
-
-
-
-    var routerObj = [
-        {path:'',component:HomePage},
-	    {path:'/second',component:SecondPage},
-	    {path:'/edit',component:EdiPage},
-	    {path:'/music',component:MusicPage},
-    ];
-
-    var router = new VueRouter({
-        routes:routerObj
-    })
-
-
-
-
     //最多可以添加100张图哦
     var vm = new Vue({
-	    router,
         el:'#app',
         data:{
-            activePage:true,//首页
+            activePage:false,//首页
             activeSecond:false,//第二页
             activeEdit:false,//编辑
-            activeMusic:false,//添加音乐
+            activeMusic:true,//添加音乐
             contentTitle:'点击设置标题',
             imgArr:[
                 {imgUrl:'',ref:'item1',c_ref:'c_item1',t_ref:'t_item1'},
@@ -56,7 +36,23 @@
                 {typeName:'激情2',musicNum:9,TypeId:129,musicSrc:''},
                 {typeName:'激情3',musicNum:9,TypeId:130,musicSrc:''}
             ],
-            d_index:0
+            musicList:[
+                {TypeId:123,musicId:11,musicName:'那个人',musicAuthor:'周延英',musicUrl:'http://sc1.111ttt.cn:8282/2018/1/03m/13/396131232171.m4a?tflag=1519095601&pin=6cd414115fdb9a950d827487b16b5f97#.mp3',picture:''},
+	            {TypeId:123,musicId:12,musicName:'那个人',musicAuthor:'周延英',musicUrl:'http://sc1.111ttt.cn:8282/2018/1/03m/13/396131232171.m4a?tflag=1519095601&pin=6cd414115fdb9a950d827487b16b5f97#.mp3',picture:''},
+	            {TypeId:123,musicId:13,musicName:'那个人',musicAuthor:'周延英',musicUrl:'http://sc1.111ttt.cn:8282/2018/1/03m/13/396131232171.m4a?tflag=1519095601&pin=6cd414115fdb9a950d827487b16b5f97#.mp3',picture:''},
+	            {TypeId:123,musicId:14,musicName:'那个人',musicAuthor:'周延英',musicUrl:'http://sc1.111ttt.cn:8282/2018/1/03m/13/396131232171.m4a?tflag=1519095601&pin=6cd414115fdb9a950d827487b16b5f97#.mp3',picture:''},
+	            {TypeId:123,musicId:15,musicName:'那个人',musicAuthor:'周延英',musicUrl:'http://sc1.111ttt.cn:8282/2018/1/03m/13/396131232171.m4a?tflag=1519095601&pin=6cd414115fdb9a950d827487b16b5f97#.mp3',picture:''},
+	            {TypeId:123,musicId:16,musicName:'那个人',musicAuthor:'周延英',musicUrl:'http://sc1.111ttt.cn:8282/2018/1/03m/13/396131232171.m4a?tflag=1519095601&pin=6cd414115fdb9a950d827487b16b5f97#.mp3',picture:''},
+	            {TypeId:123,musicId:17,musicName:'那个人',musicAuthor:'周延英',musicUrl:'http://sc1.111ttt.cn:8282/2018/1/03m/13/396131232171.m4a?tflag=1519095601&pin=6cd414115fdb9a950d827487b16b5f97#.mp3',picture:''},
+	            {TypeId:123,musicId:18,musicName:'那个人',musicAuthor:'周延英',musicUrl:'http://sc1.111ttt.cn:8282/2018/1/03m/13/396131232171.m4a?tflag=1519095601&pin=6cd414115fdb9a950d827487b16b5f97#.mp3',picture:''},
+	            {TypeId:123,musicId:19,musicName:'那个人',musicAuthor:'周延英',musicUrl:'http://sc1.111ttt.cn:8282/2018/1/03m/13/396131232171.m4a?tflag=1519095601&pin=6cd414115fdb9a950d827487b16b5f97#.mp3',picture:''},
+	            {TypeId:123,musicId:20,musicName:'那个人',musicAuthor:'周延英',musicUrl:'http://sc1.111ttt.cn:8282/2018/1/03m/13/396131232171.m4a?tflag=1519095601&pin=6cd414115fdb9a950d827487b16b5f97#.mp3',picture:''},
+            ],
+            d_index:0,
+            c_index:null,//当前选中下标
+	        m_index:0,//音乐下标
+            musicId:'',//当前选中的音乐
+	        typeSelected:true
         },
         created:function(){
             console.log('test');
@@ -151,14 +147,30 @@
             selectFun:function(flag){
                 this.isActive = flag?true:false;
             },
-            selectMusic:function(val){
+            //选择音乐类型
+            selectType:function (val) {
+	            this.typeSelected = !this.typeSelected;
+	            if(val == 'no'){
+	                this.musicId = '';
+                }
+	            this.d_index = val;
+	            if(this.c_index !=val){
+		            this.m_index = 0;//默认选中为第一个
+                }
+	            this.c_index = val;
+	            console.log(this.d_index==val&&!this.typeSelected);
+            },
+            selectMusic:function(val,id){
                 console.log(val);
-                this.d_index = val;
+                this.m_index = val;
+                this.musicId = id;
             },
             //确认选择音乐，提交
             submitSelect:function (musicId) {
-                this.activeMusic = false;
-                this.activeSecond = true;
+                console.log('this.musicId=',this.musicId);
+
+
+
             },
             //添加音乐
             addMusicFun:function(){

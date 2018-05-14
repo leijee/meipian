@@ -9,12 +9,6 @@
 </head>
 <body>
     <div id="app" class="page-index active">
-
-
-        <router-view></router-view>
-
-
-
         <div class="index-music" v-if="activeMusic">
             <div class="tab-list">
                 <div class="tab-item" @click="selectFun(1)" :class="isActive?'active':''">
@@ -25,14 +19,24 @@
                 </div>
             </div>
            <div class="music-select" v-show="isActive">
-               <div class="music-no music-item" :class="'no'==d_index?'selected':''" @click="selectMusic('no')">
+               <div class="music-no music-item" :class="'no'==d_index?'selected':''" @click="selectType('no')">
                    <p class="item-title">无背景音乐</p>
                </div>
-               <li class="music-item"  v-for="(item,j) in musicTypeList" :class="d_index==j?'selected':''" :key="j" @click="selectMusic(j)">
-                   <div>
-                       <p class="item-title">{{item.typeName}}</p>
-                       <p class="item-text">包含{{item.musicNum}}首歌曲</p>
+               <li class="music-list music-item"  v-for="(item,j) in musicTypeList" :key="j" >
+                   <div class="top-content" :class="d_index==j&&!typeSelected?'hasSelected':''" :class="d_index==j&&typeSelected?'':'unselect'" @click="selectType(j)">
+                       <div>
+                           <p class="item-title">{{item.typeName}}</p>
+                           <p class="item-text">包含{{item.musicNum}}首歌曲</p>
+                       </div>
                    </div>
+                   <div v-if="d_index==j">
+                       <div v-show="typeSelected">
+                           <ul class="b-content-list">
+                               <li class="b-content-item" v-for="(item,m) in musicList"  :key="m" @click="selectMusic(m,item.musicId)" :class="m_index == m?'selected':''">{{item.musicName}}</li>
+                           </ul>
+                       </div>
+                   </div>
+
                </li>
                <div class="empty">
 
@@ -137,5 +141,5 @@
 <!--<script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>-->
 <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
 <script src="./js/lib/vue-router.js"></script>
-<script src="./js/index.js"></script>
+<script src="./js/index_beifen.js"></script>
 </html>

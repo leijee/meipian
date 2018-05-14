@@ -40,7 +40,7 @@ address, caption, cite, code, dfn, em, th, var {
   font-style: normal;
   font-weight: 500; }
 
-ol, ul {
+ol, ul, li {
   list-style: none; }
 
 caption, th {
