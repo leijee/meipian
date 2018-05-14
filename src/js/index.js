@@ -146,9 +146,9 @@
 		'                    <div class="first-item" v-if="i == 0">\n' +
 		'                        <div class="addItem topItem" @click.stop="addTopFlag=false" v-show="addTopFlag">+</div>\n' +
 		'                        <div class="add-content" v-show="!addTopFlag">\n' +
-		'                            <span class="icon-text"></span>\n' +
-		'                            <span class="icon-img"></span>\n' +
-		'                            <span class="icon-video"></span>\n' +
+		'                            <span class="icon-text" @click.stop="addTextFun(-1></span>\n' +
+		'                            <span class="icon-img" @click.stop="addImgFun"></span>\n' +
+		'                            <span class="icon-video" @click.stop="addVideoFun"></span>\n' +
 		'                        </div>\n' +
 		'                    </div>\n' +
 		'                    <div class="item-content">\n' +
@@ -164,7 +164,7 @@
 		'                    </div>\n' +
 		'                    <div class="addItem" :ref="item.c_ref" @click.stop="hideAddBottom(item.ref,item.c_ref,$event)" v-if="addBottomFlag+\'i\'">+</div>\n' +
 		'                    <div class="add-content" :ref="item.ref">\n' +
-		'                        <span class="icon-text" @click.stop="addTextFun"></span>\n' +
+		'                        <span class="icon-text" @click.stop="addTextFun(i)"></span>\n' +
 		'                        <span class="icon-img" @click.stop="addImgFun"></span>\n' +
 		'                        <span class="icon-video" @click.stop="addVideoFun"></span>\n' +
 		'                    </div>\n' +
@@ -222,6 +222,7 @@
 				this.$refs[ref][0].style.display = 'block'
 			},
 			addTextFun:function(){
+				this.$store.commit('EDITVALUE', '');
 				this.$router.push({
 					path: '/edit'
 				});
@@ -317,7 +318,6 @@
 
 				if (i == 'contentTitle') {//设置标题，编辑文本内容
 					this.$store.commit('SETTITLE', value);
-
 				} else {//设置文本内容
 					this.imgArr[i].c_text = value;
 					console.log(this.imgArr);
@@ -482,6 +482,7 @@
 		methods: {}
 	});
 
+	//获取图片的url
 	function getImgURL(file) {
 		var url = null;
 		// 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已
@@ -495,14 +496,20 @@
 		return url;
 	}
 
-	var imgSrcArr = [];
-
-	// $("#addPhotoBtn").on("change",function (e) {
-	//     var files = $(this).get(0).files;
-	//     for(var i=0,len=files.length;i<len;i++){
-	//         var imgSrc = getImgURL(files[i]);
-	//         console.log(imgSrc);
-	//     }
-	// })
+	/**
+	 * 数组指定位置插入数据
+	 * @param arr 当前数组
+	 * @param i 插入下标
+	 * @param item 插入值
+	 * return 返回一个新的数组
+     */
+	function arrayInsert(arr,i,item){
+		if(i == -1){
+			arr.splice(0,-1,item);
+		}else{
+			arr.splice(i,0,item);
+		}
+		return arr;
+	}
 
 })();
