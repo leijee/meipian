@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页测试</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/lib/flexible.js"></script>
+</head>
+<body>
+    <div id="app" class="page-index active">
+
+
+        <router-view></router-view>
+
+
+
+        <div class="index-music" v-if="activeMusic">
+            <div class="tab-list">
+                <div class="tab-item" @click="selectFun(1)" :class="isActive?'active':''">
+                    <span>选择音乐</span>
+                </div>
+                <div class="tab-item" @click="selectFun(0)" :class="isActive?'':'active'">
+                    <span>搜索音乐</span>
+                </div>
+            </div>
+           <div class="music-select" v-show="isActive">
+               <div class="music-no music-item" :class="'no'==d_index?'selected':''" @click="selectMusic('no')">
+                   <p class="item-title">无背景音乐</p>
+               </div>
+               <li class="music-item"  v-for="(item,j) in musicTypeList" :class="d_index==j?'selected':''" :key="j" @click="selectMusic(j)">
+                   <div>
+                       <p class="item-title">{{item.typeName}}</p>
+                       <p class="item-text">包含{{item.musicNum}}首歌曲</p>
+                   </div>
+               </li>
+               <div class="empty">
+
+               </div>
+               <div class="music-footer" @click="submitSelect(1)">
+                   <p class="s-footer-text">完成</p>
+               </div>
+           </div>
+            <div class="music-search" v-show="!isActive">
+                <div class="search-content">
+                    <i class="icon-search"></i>
+                    <input type="text" placeholder="搜索在线音乐">
+                </div>
+
+                <div class="music-footer" @click="submitSelect(0)">
+                    <p class="s-footer-text">完成</p>
+                </div>
+            </div>
+        </div>
+        <div class="index-home" v-if="activePage">
+            <div class="home-header">
+                <div>
+                    <h2 class="header-title">开始创作</h2>
+                    <p class="header-text">可以添加100张美图哦</p>
+                </div>
+            </div>
+            <div class="home-body">
+                <div class="addPhoto">
+                    <input type="file" @change="changeImg($event)" accept="image/*" multiple="multiple" class="addPhoto-btn" id="addPhotoBtn">
+                    <p class="btn-add">+</p>
+                    <p class="text-add">添加照片</p>
+                </div>
+            </div>
+
+            <div class="home-footer">
+                <div class="footer-item">发现</div>
+                <div class="footer-item">
+                    <p class="btn-add">+</p>
+                    <p>开始制作</p>
+                </div>
+                <div class="footer-item">我的</div>
+            </div>
+        </div>
+        <div class="index-second" @click="hideAddFlag" v-show="activeSecond">
+            <div class="second-header">
+                <img class="bg_header" src="./imgs/bg_header1.jpg" alt="">
+                <div class="header-content">
+                    <textarea placeholder="点击设置标题"  class="content-title" ref="contentTitle" @click.stop="addContent('contentTitle',$event)"></textarea>
+                    <div class="content-bottom">
+                        <div class="bottom-item item-addMusic"><span @click.stop="addMusicFun">添加音乐</span></div>
+                        <div class="bottom-item item-setBg"><span>更换封面</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="second-body">
+                <div class="body-item" v-for="(item,i) in imgArr" :key="i">
+                    <div class="first-item" v-if="i == 0">
+                        <div class="addItem topItem" @click.stop="addTopFlag=false" v-show="addTopFlag">+</div>
+                        <div class="add-content" v-show="!addTopFlag">
+                            <span class="icon-text"></span>
+                            <span class="icon-img"></span>
+                            <span class="icon-video"></span>
+                        </div>
+                    </div>
+                    <div class="item-content">
+                        <i class="close" @click="removeCurrentFun(i,item.type)"></i>
+                        <div class="item-left">
+                            <img class="left-item" :src="item.imgUrl" alt="">
+                        </div>
+                        <div class="item-right">
+                            <textarea placeholder="点击添加文字" class="right-item" @click="addContent(item.t_ref,$event)" :ref="item.t_ref">
+
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="addItem" :ref="item.c_ref" @click.stop="hideAddBottom(item.ref,item.c_ref,$event)" v-if="addBottomFlag+'i'">+</div>
+                    <div class="add-content" :ref="item.ref">
+                        <span class="icon-text" @click.stop="addTextFun"></span>
+                        <span class="icon-img" @click.stop="addImgFun"></span>
+                        <span class="icon-video" @click.stop="addVideoFun"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="second-footer">
+                <p class="s-footer-text">完成</p>
+            </div>
+        </div>
+
+        <div class="index-edit" v-if="activeEdit">
+            <textarea class="edit-content"  @focus="focusFun" @blur.passive="blurFun" v-model="editValue"  ref="editObj" @input="editFun">
+
+            </textarea>
+            <div class="edit-num">{{textNum}}/{{maxNum}}</div>
+            <div class="edit-btn" v-if="showSubmit">
+                <span class="btn-submit" @click.stop="submitEdit">完成</span>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+<!--<script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>-->
+<script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+<script src="./js/lib/vue-router.js"></script>
+<script src="./js/index.js"></script>
+</html>

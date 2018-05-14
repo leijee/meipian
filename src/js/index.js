@@ -3,173 +3,170 @@
  */
 (function () {
 
-    //最多可以添加100张图哦
-
-    var vm = new Vue({
-        el:'#app',
-        data:{
-            activePage:true,//首页
-            activeSecond:false,//第二页
-            activeEdit:false,//编辑
-            activeMusic:false,//添加音乐
-            contentTitle:'点击设置标题',
-            imgArr:[
-                {imgUrl:'',ref:'item1',c_ref:'c_item1',t_ref:'t_item1'},
-                {imgUrl:'',ref:'item2',c_ref:'c_item2',t_ref:'t_item2'},
-                {imgUrl:'',ref:'item3',c_ref:'c_item3',t_ref:'t_item3'}
-            ],
-            default_ref:'',
-            c_default_ref:'',
-            t_default_ref:'',//添加文字内容ref
-            addTopFlag:true,
-            addBottomFlag:true,
-            editValue:'',
-            textNum:0,//默认字数
-            maxNum:5000,//字数长度最大值
-            showSubmit:true,
-            isActive:true,//选择音乐，选中时flag
-            musicTypeList:[
-                {typeName:'圣诞',musicNum:8,TypeId:123,musicSrc:''},
-                {typeName:'欢快',musicNum:10,TypeId:124,musicSrc:''},
-                {typeName:'优美',musicNum:13,TypeId:125,musicSrc:''},
-                {typeName:'浪漫',musicNum:9,TypeId:126,musicSrc:''},
-                {typeName:'激情',musicNum:9,TypeId:127,musicSrc:''},
-                {typeName:'激情1',musicNum:9,TypeId:128,musicSrc:''},
-                {typeName:'激情2',musicNum:9,TypeId:129,musicSrc:''},
-                {typeName:'激情3',musicNum:9,TypeId:130,musicSrc:''}
-            ],
-            d_index:0
-        },
-        created:function(){
-            console.log('test');
-
-        },
-        mounted:function(){
-
+	var HomePage = {
+		template:'<div class="index-home" v-if="activePage">\n' +
+		'            <div class="home-header">\n' +
+		'                <div>\n' +
+		'                    <h2 class="header-title">开始创作</h2>\n' +
+		'                    <p class="header-text">可以添加100张美图哦</p>\n' +
+		'                </div>\n' +
+		'            </div>\n' +
+		'            <div class="home-body">\n' +
+		'                <div class="addPhoto">\n' +
+		'                    <input type="file" @change="changeImg($event)" accept="image/*" multiple="multiple" class="addPhoto-btn" id="addPhotoBtn">\n' +
+		'                    <p class="btn-add">+</p>\n' +
+		'                    <p class="text-add">添加照片</p>\n' +
+		'                </div>\n' +
+		'            </div>\n' +
+		'\n' +
+		'            <div class="home-footer">\n' +
+		'                <div class="footer-item">发现</div>\n' +
+		'                <div class="footer-item">\n' +
+		'                    <p class="btn-add">+</p>\n' +
+		'                    <p>开始制作</p>\n' +
+		'                </div>\n' +
+		'                <div class="footer-item">我的</div>\n' +
+		'            </div>\n' +
+		'        </div>',
+		props:['imgArr'],
+        data:function(){
+	        return {
+		        activePage:true
+            }
         },
         methods:{
-            changeImg:function(e){
-                var files = e.target.files;
-                this.imgArr = [];
-                for(var i=0,len=files.length;i<len;i++){
-                    var imgSrc = getImgURL(files[i]);
-                    this.imgArr.push({
-                        imgUrl:imgSrc,
-                        ref:'item'+i,
-                        c_ref:'c_item'+i,
-                        t_ref:'t_item'+i,
-                        type:1//1图片
-                    })
-                }
-                console.log(this.imgArr);
-                this.activePage = false;
-                this.activeSecond = true;
-            },
-            hideAddFlag:function () {
+	        changeImg:function(e){
+		        var files = e.target.files;
+		        console.log(this.$props);
+		        this.$props.imgArr = [];
+		        for(var i=0,len=files.length;i<len;i++){
+			        var imgSrc = getImgURL(files[i]);
+			        this.$props.imgArr.push({
+				        imgUrl:imgSrc,
+				        ref:'item'+i,
+				        c_ref:'c_item'+i,
+				        t_ref:'t_item'+i,
+				        type:1//1图片
+			        })
+		        }
+                console.log(this.$emit('setImgArr',this.$props.imgArr));
+		        this.$emit('setImgArr',this.$props.imgArr);
+		        this.activePage = false;
+		        this.activeSecond = true;
+		        this.$router.push({
+                    path:'second'
+                })
+	        }
+        }
+	};
 
-                this.addTopFlag = true;
-
-                if(this.default_ref!=''){
-                    this.$refs[this.default_ref][0].style.display = 'none';
-                }
-                console.log(this.c_default_ref);
-                if(this.c_default_ref != ''){
-                    this.$refs[this.c_default_ref][0].style.display = 'block';
-                }
-            },
-            hideAddBottom:function (ref,c_ref,e) {
-
-                if(this.default_ref!=''){
-                    console.log(this.$refs[this.default_ref][0]);
-                    this.$refs[this.default_ref][0].style.display = 'none';
-                }
-                if(this.c_default_ref !=''){
-                    console.log(this.$refs[this.c_default_ref][0])
-                    this.$refs[this.c_default_ref][0].style.display = 'block';
-                }
-                this.default_ref = ref;
-                this.c_default_ref = c_ref;
-                this.addTopFlag = true;
-                e.target.style.display = 'none';
-                this.$refs[ref][0].style.display = 'block'
-            },
-            editFun:function () {
-
-                if(this.editValue.length>this.maxNum){
-                    this.editValue = this.editValue.substr(0,this.maxNum);
-                }
-                this.textNum = this.editValue.length;
-
-            },
-            blurFun:function () {
-                this.showSubmit = false;
-            },
-            focusFun:function () {
-                this.showSubmit = true;
-            },
-            //点击完成，提交内容
-            submitEdit:function () {
-                var value = this.editValue;
-                this.activeSecond = true;
-                this.activeEdit = false;
-                if(this.t_default_ref!=''){
-                    this.$nextTick(function(){
-                        if(this.t_default_ref == 'contentTitle'){//设置标题，编辑文本内容
-                            this.$refs[this.t_default_ref].value = value;
-                        }else{//设置文本内容
-                            this.$refs[this.t_default_ref][0].value = value;
-                        }
-                    });
-                }
-            },
-            //添加内容
-            addContent:function (t_ref,e) {
-                this.t_default_ref = t_ref;
-                this.activeSecond = false;
-                this.activeEdit = true;
-                this.editValue = e.target.value;
-            },
-            //选择音乐tab切换
-            selectFun:function(flag){
-                this.isActive = flag?true:false;
-            },
-            selectMusic:function(val){
-                console.log(val);
-                this.d_index = val;
-            },
-            //确认选择音乐，提交
-            submitSelect:function (musicId) {
-                this.activeMusic = false;
-                this.activeSecond = true;
-            },
-            //添加音乐
-            addMusicFun:function(){
-                this.activeSecond = false;
-                this.activeMusic = true;
-            },
-            //移除当前
-            removeCurrentFun:function(i,_type){
-                var len = 0;
-                this.imgArr.forEach(function(item){
-                    if(item.type == _type){
-                        len = len+1;
-                    }
-                });
-                if(len == 1){
-                    alert('至少要保留一张照片');
-                }else{
-                    this.imgArr.splice(i,1);
-                }
+	var SecondPage = {
+	    template:'<div class="index-second" @click="hideAddFlag" v-show="activeSecond">\n' +
+	    '            <div class="second-header">\n' +
+	    '                <img class="bg_header" src="./imgs/bg_header1.jpg" alt="">\n' +
+	    '                <div class="header-content">\n' +
+	    '                    <textarea placeholder="点击设置标题"  class="content-title" ref="contentTitle" @click.stop="addContent(\'contentTitle\',$event)"></textarea>\n' +
+	    '                    <div class="content-bottom">\n' +
+	    '                        <div class="bottom-item item-addMusic"><span @click.stop="addMusicFun">添加音乐</span></div>\n' +
+	    '                        <div class="bottom-item item-setBg"><span>更换封面</span></div>\n' +
+	    '                    </div>\n' +
+	    '                </div>\n' +
+	    '            </div>\n' +
+	    '            <div class="second-body">\n' +
+	    '                <div class="body-item" v-for="(item,i) in imgArrs" :key="i">\n' +
+	    '                    <div class="first-item" v-if="i == 0">\n' +
+	    '                        <div class="addItem topItem" @click.stop="addTopFlag=false" v-show="addTopFlag">+</div>\n' +
+	    '                        <div class="add-content" v-show="!addTopFlag">\n' +
+	    '                            <span class="icon-text"></span>\n' +
+	    '                            <span class="icon-img"></span>\n' +
+	    '                            <span class="icon-video"></span>\n' +
+	    '                        </div>\n' +
+	    '                    </div>\n' +
+	    '                    <div class="item-content">\n' +
+	    '                        <i class="close" @click="removeCurrentFun(i,item.type)"></i>\n' +
+	    '                        <div class="item-left">\n' +
+	    '                            <img class="left-item" :src="item.imgUrl" alt="">\n' +
+	    '                        </div>\n' +
+	    '                        <div class="item-right">\n' +
+	    '                            <textarea placeholder="点击添加文字" class="right-item" @click="addContent(item.t_ref,$event)" :ref="item.t_ref">\n' +
+	    '\n' +
+	    '                            </textarea>\n' +
+	    '                        </div>\n' +
+	    '                    </div>\n' +
+	    '                    <div class="addItem" :ref="item.c_ref" @click.stop="hideAddBottom(item.ref,item.c_ref,$event)" v-if="addBottomFlag+\'i\'">+</div>\n' +
+	    '                    <div class="add-content" :ref="item.ref">\n' +
+	    '                        <span class="icon-text" @click.stop="addTextFun"></span>\n' +
+	    '                        <span class="icon-img" @click.stop="addImgFun"></span>\n' +
+	    '                        <span class="icon-video" @click.stop="addVideoFun"></span>\n' +
+	    '                    </div>\n' +
+	    '                </div>\n' +
+	    '            </div>\n' +
+	    '            <div class="second-footer">\n' +
+	    '                <p class="s-footer-text">完成</p>\n' +
+	    '            </div>\n' +
+	    '        </div>',
+        props:['imgArr'],
+        data:function(){
+	        return {
+		        activeSecond:true
             }
         },
         computed:{
-            editValue:function(val,newValue){
-                console.log(val,newValue)
+	        imgArrs:function(){
+	            // console.log(this.$props);
+	            return this.$props.imgArr;
+            }
+        },
+        methods:{
+	        hideAddFlag:function(){
+		        this.addTopFlag = true;
+		        if(this.default_ref!=''){
+			        this.$refs[this.default_ref][0].style.display = 'none';
+		        }
+		        console.log(this.c_default_ref);
+		        if(this.c_default_ref != ''){
+			        this.$refs[this.c_default_ref][0].style.display = 'block';
+		        }
+            },
+	        //添加内容
+	        addContent:function (t_ref,e) {
+		        this.t_default_ref = t_ref;
+		        this.activeSecond = false;
+		        this.activeEdit = true;
+		        this.editValue = e.target.value;
+	        },
+        }
+    };
+
+
+
+    var routerObj = [
+        {path:'',component:HomePage},
+	    {path:'/second',component:SecondPage},
+	    // {path:'/edit',component:EdiPage},
+	    // {path:'/music',component:MusicPage},
+    ];
+
+    var router = new VueRouter({
+        routes:routerObj
+    })
+
+	//自动安装了vuex和vue-route
+	var app = new Vue({
+		router,
+        data:{
+		    imgArr:[]
+        },
+		methods:{
+	        setImgArrFun:function(data){
+	            console.log(data);
+	            this.imgArr = data;
             }
         }
-    });
+	}).$mount('#app');
 
-    function getImgURL(file) {
+
+	function getImgURL(file) {
         var url = null ;
         // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已
         if (window.createObjectURL!=undefined) { // basic
