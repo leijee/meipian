@@ -174,7 +174,7 @@ body {
   .page-index .index-second {
     position: relative;
     padding-bottom: 2rem;
-    height: 100%;
+    min-height: 100%;
     background: #f1f2f6; }
     .page-index .index-second .second-header {
       position: relative;
@@ -302,7 +302,20 @@ body {
               top: 0.7rem;
               width: 3rem;
               height: 3rem;
-              background: #cbcdd9; }
+              border: 1px solid #eee; }
+            .page-index .index-second .second-body .body-item .item-content .item-left .left-video {
+              width: 3rem;
+              height: 3rem;
+              z-index: 1; }
+            .page-index .index-second .second-body .body-item .item-content .item-left .left-input-video {
+              z-index: 3;
+              opacity: 0; }
+            .page-index .index-second .second-body .body-item .item-content .item-left .left-input-img {
+              z-index: 3;
+              opacity: 0; }
+            .page-index .index-second .second-body .body-item .item-content .item-left .left-img {
+              z-index: 2;
+              opacity: 0; }
           .page-index .index-second .second-body .body-item .item-content .item-right {
             position: absolute;
             right: 0.6rem;
@@ -343,6 +356,7 @@ body {
         .page-index .index-second .second-body .body-item .first-item .add-content {
           display: block; }
         .page-index .index-second .second-body .body-item .add-content {
+          position: relative;
           display: none;
           margin: 0 auto;
           width: 10.6rem;
@@ -352,20 +366,40 @@ body {
           border-radius: 0.6rem;
           text-align: center; }
           .page-index .index-second .second-body .body-item .add-content span {
+            position: absolute;
+            top: 50%;
             display: inline-block;
-            margin: 0 0.8rem;
+            margin-top: -0.4rem;
             width: 1.1rem;
             height: 0.8rem;
             vertical-align: middle; }
             .page-index .index-second .second-body .body-item .add-content span.icon-text {
+              left: 1.6rem;
               background: url(../imgs/icon_text.png) no-repeat;
               background-size: 100% 100%; }
             .page-index .index-second .second-body .body-item .add-content span.icon-img {
+              left: 50%;
+              margin-left: -0.54rem;
               background: url(../imgs/icon_img.png) no-repeat;
               background-size: 100% 100%; }
             .page-index .index-second .second-body .body-item .add-content span.icon-video {
+              right: 1.6rem;
               background: url(../imgs/icon_video.png) no-repeat;
               background-size: 100% 100%; }
+          .page-index .index-second .second-body .body-item .add-content input {
+            position: absolute;
+            top: 50%;
+            margin-top: -0.4rem;
+            z-index: 2;
+            display: block;
+            width: 1.1rem;
+            height: 0.8rem;
+            opacity: 0; }
+          .page-index .index-second .second-body .body-item .add-content .selectImg {
+            left: 50%;
+            margin-left: -0.54rem; }
+          .page-index .index-second .second-body .body-item .add-content .selectVideo {
+            right: 1.6rem; }
     .page-index .index-second .second-footer {
       display: flex;
       align-items: center;
@@ -571,3 +605,72 @@ body {
       font-size: 0.64rem;
       color: #fff;
       background: #57a7fe; }
+  .page-index .index-review {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    color: #020202;
+    background: #fff; }
+    .page-index .index-review .review-header {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 2rem;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      z-index: 2; }
+      .page-index .index-review .review-header .head-item {
+        position: absolute;
+        top: 50%;
+        margin-top: -0.44rem;
+        height: 0.9rem;
+        line-height: 0.9rem; }
+        .page-index .index-review .review-header .head-item.icon-home {
+          margin-top: -0.5rem;
+          left: 0.6rem;
+          width: 0.9rem;
+          background: url(../imgs/icon_home.png) no-repeat;
+          background-size: 100% 100%; }
+        .page-index .index-review .review-header .head-item.head-back-home {
+          left: 1.8rem; }
+        .page-index .index-review .review-header .head-item.head-edit {
+          right: 0.6rem;
+          padding: 0rem 0.6rem;
+          background: #57a7fe;
+          color: #fff;
+          border-radius: 0.2rem; }
+    .page-index .index-review .review-content {
+      position: relative;
+      padding: 2rem 0; }
+      .page-index .index-review .review-content .review-title {
+        padding: 0.6rem 1rem 0.4rem 0.6rem;
+        font-size: 0.7rem;
+        color: #000; }
+      .page-index .index-review .review-content .review-userInfo {
+        display: block;
+        padding-left: 0.6rem;
+        padding-bottom: 1.2rem; }
+        .page-index .index-review .review-content .review-userInfo span {
+          margin-right: 0.4rem;
+          font-size: 0.4rem;
+          color: #bcbcbc; }
+      .page-index .index-review .review-content .review-list {
+        width: 100%;
+        height: auto; }
+        .page-index .index-review .review-content .review-list .review-item {
+          width: 100%;
+          height: auto;
+          margin-bottom: 0.4rem; }
+          .page-index .index-review .review-content .review-list .review-item .item-text {
+            padding-left: 0.6rem;
+            padding-bottom: 0.8rem;
+            font-size: 0.6rem;
+            color: #000; }
+          .page-index .index-review .review-content .review-list .review-item .item-img {
+            display: block;
+            width: 100%; }
+          .page-index .index-review .review-content .review-list .review-item .item-video {
+            width: 100%;
+            height: 7.2rem;
+            background: #000; }

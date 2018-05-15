@@ -9,7 +9,7 @@
             activePage:false,//首页
             activeSecond:false,//第二页
             activeEdit:false,//编辑
-            activeMusic:true,//添加音乐
+            activeMusic:false,//添加音乐
             contentTitle:'点击设置标题',
             imgArr:[
                 {imgUrl:'',ref:'item1',c_ref:'c_item1',t_ref:'t_item1'},

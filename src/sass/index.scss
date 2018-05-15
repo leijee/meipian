@@ -120,7 +120,7 @@ body{
     .index-second{
         position: relative;
         padding-bottom: px(100);
-        height: 100%;
+        min-height:100%;
         background: #f1f2f6;
 
         .second-header{
@@ -251,9 +251,25 @@ body{
                             top:px(35);
                             width: px(150);
                             height:px(150);
-                            background: #cbcdd9;
+                            border: 1px solid #eee;
                         }
-
+                        .left-video{
+                            width: px(150);
+                            height: px(150);
+                            z-index: 1;
+                        }
+                        .left-input-video{
+                            z-index: 3;
+                            opacity: 0;
+                        }
+                        .left-input-img{
+                            z-index: 3;
+                            opacity: 0;
+                        }
+                        .left-img{
+                            z-index: 2;
+                            opacity: 0;
+                        }
                     }
                     .item-right{
                         position: absolute;
@@ -330,9 +346,9 @@ body{
                     }
                 }
                 .add-content{
+                    position: relative;
                     display: none;
                     margin: 0 auto;
-
                     width:px(530);
                     height: px(100);
                     line-height: px(100);
@@ -340,24 +356,46 @@ body{
                     border-radius: px(30);
                     text-align: center;
                     span{
+                        position: absolute;
+                        top: 50%;
                         display: inline-block;
-                        margin: 0 px(40);
+                        margin-top: px(-20);
                         width: px(55);
                         height: px(40);
                         vertical-align: middle;
                         &.icon-text{
+                            left: px(80);
                             background: url(../imgs/icon_text.png) no-repeat;
                             background-size:100% 100%;
                         }
                         &.icon-img{
+                            left: 50%;
+                            margin-left: px(-27);
                             background: url(../imgs/icon_img.png) no-repeat;
                             background-size:100% 100%;
                         }
                         &.icon-video{
+                            right: px(80);
                             background: url(../imgs/icon_video.png) no-repeat;
                             background-size:100% 100%;
                         }
-
+                    }
+                    input{
+                        position: absolute;
+                        top: 50%;
+                        margin-top: px(-20);
+                        z-index: 2;
+                        display: block;
+                        width: px(55);
+                        height: px(40);
+                        opacity: 0;
+                    }
+                    .selectImg{
+                        left: 50%;
+                        margin-left: px(-27);
+                    }
+                    .selectVideo{
+                        right: px(80);
                     }
 
                 }
@@ -657,4 +695,90 @@ body{
             background: #57a7fe;
         }
     }
+    .index-review{
+        position: relative;
+        width: 100%;
+        min-height: 100%;
+        color:#020202;
+        background: #fff;
+        .review-header{
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: px(100);
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            z-index: 2;
+            .head-item{
+                position: absolute;
+                top: 50%;
+                margin-top: px(-22);
+                height: px(45);
+                line-height: px(45);
+                &.icon-home{
+                    margin-top: px(-25);
+                    left: px(30);
+                    width: px(45);
+                    background: url(../imgs/icon_home.png) no-repeat;
+                    background-size: 100% 100%;
+                }
+                &.head-back-home{
+                    left: px(90);
+                }
+                &.head-edit{
+                    right: px(30);
+                    padding: px(0) px(30);
+                    background: #57a7fe;
+                    color: #fff;
+                    border-radius: px(10);
+                }
+            }
+        }
+        .review-content{
+            position: relative;
+            padding: px(100) 0;
+            .review-title{
+                padding: px(30) px(50) px(20) px(30);
+                font-size: px(35);
+                color: #000;
+            }
+            .review-userInfo{
+                display: block;
+                padding-left: px(30);
+                padding-bottom: px(60);
+                span{
+                    margin-right: px(20);
+                    font-size: px(20);
+                    color: #bcbcbc;
+                }
+            }
+            .review-list{
+                width: 100%;
+                height: auto;
+                .review-item{
+                    width: 100%;
+                    height: auto;
+                    margin-bottom: px(20);
+                    .item-text{
+                        padding-left: px(30);
+                        padding-bottom: px(40);
+                        font-size: px(30);
+                        color: #000;
+                    }
+                    .item-img{
+                        display: block;
+                        width: 100%;
+                    }
+                    .item-video{
+                        width: 100%;
+                        height: px(360);
+                        background: #000;
+                    }
+                }
+            }
+        }
+
+    }
+
 }
