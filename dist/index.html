@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>首页测试</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/lib/flexible.js"></script>
 </head>
 <body>
-    测试一下
+    <div id="app" class="page-index active">
+        <router-view :imgArr="imgArr" ></router-view>
+    </div>
 </body>
+<!--<script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>-->
+<script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+<script src="./js/lib/vue-router.js"></script>
+<script src="./js/lib/vuex.js"></script>
+<script src="./js/index.js"></script>
 </html>

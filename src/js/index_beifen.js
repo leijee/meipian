@@ -2,6 +2,63 @@
  * Created by Administrator on 2018/5/12.
  */
 (function () {
+
+
+	Vue.component('vAlert',{
+		props:['a_title','a_content','showAlert','sureFun','cancelFun'],
+		template:'<div class="index-alert" v-if="showAlert">\n' +
+		'            <div class="mask"></div>\n' +
+		'            <div class="alert-content">\n' +
+		'                <div class="content-title">{{currentTitle}}</div>\n' +
+		'                <div class="content-text"></div>\n' +
+		'                <div class="content-btn">\n' +
+		'                    <div class="btn-cancel" @click="cancelFun">取消</div>\n' +
+		'                    <div class="btn-sure" @click="sureFun">确定</div>\n' +
+		'                </div>\n' +
+		'            </div>\n' +
+		'        </div>',
+		data:function () {
+			return {
+
+			}
+		},
+		computed:{
+			currentTitle:function () {
+				return this.$props.a_title;
+			},
+			showAlert:function () {
+				return this.$props.showAlert;
+			}
+		},
+        watch:{
+	        showAlert:function (oldValaue,newValue) {
+                console.log(oldValaue,newValue);
+	        }
+        },
+        created:function () {
+
+        },
+		methods:{
+			cancelFun:function () {
+				console.log(this.$props.cancel);
+				if(typeof this.$props.cancel == 'function'){
+					this.$props.cancelFun();
+				}else{
+					this.showAlert = false;
+				}
+			},
+			sureFun:function(){
+				if(typeof this.$props.sureFun == 'function'){
+					this.showAlert = this.$props.sureFun();
+				}else{
+					this.showAlert = false;
+				}
+			}
+		}
+
+	});
+
+
     //最多可以添加100张图哦
     var vm = new Vue({
         el:'#app',
@@ -10,6 +67,7 @@
             activeSecond:false,//第二页
             activeEdit:false,//编辑
             activeMusic:false,//添加音乐
+	        activeReview:false,//预览页
             contentTitle:'点击设置标题',
             imgArr:[
                 {imgUrl:'',ref:'item1',c_ref:'c_item1',t_ref:'t_item1'},
@@ -52,7 +110,12 @@
             c_index:null,//当前选中下标
 	        m_index:0,//音乐下标
             musicId:'',//当前选中的音乐
-	        typeSelected:true
+	        typeSelected:true,
+            a_title:'是否关闭',
+            a_content:'哇哈哈哈',
+            showAlert:false,
+            sureFun:null,
+            cancelFun:null
         },
         created:function(){
             console.log('test');
@@ -190,7 +253,11 @@
                 }else{
                     this.imgArr.splice(i,1);
                 }
-            }
+            },
+	        alertTip:function () {
+	            console.log('ces');
+                this.showAlert = true;
+	        }
         },
         computed:{
             editValue:function(val,newValue){
@@ -198,6 +265,9 @@
             }
         }
     });
+
+
+
 
     function getImgURL(file) {
         var url = null ;

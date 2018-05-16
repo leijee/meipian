@@ -156,6 +156,10 @@ body{
                     background: rgba(255,255,255,0);
                     border:none;
                     box-sizing: border-box;
+
+                }
+                .content-title::-webkit-input-placeholder{
+                    color:#fff;
                 }
 
                 .content-bottom{
@@ -399,11 +403,6 @@ body{
                     }
 
                 }
-
-
-
-
-
             }
         }
         .second-footer{
@@ -420,10 +419,47 @@ body{
             color: #fff;
             background: #57a7fe;
         }
+    }
 
+    .tab-bgImg{
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        z-index: 99;
+        padding: px(10) px(0) px(100) px(10);
+        width: 100%;
+        min-height: 100%;
+        background: #fff;
+        box-sizing: border-box;
+
+        .bg-item{
+            float: left;
+            position: relative;
+            margin-right: px(10);
+            margin-bottom: px(10);
+            width: px(700/4);
+            height: px(700/4);
+            img{
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            .selected{
+                position: absolute;
+                right: px(20);
+                top: px(20);
+                width: px(36);
+                height: px(36);
+                box-sizing: border-box;
+                background: url(../imgs/bg_select.png) no-repeat;
+                background-size:100% 100%;
+            }
+        }
 
 
     }
+
     .index-edit{
         width: 100%;
         position: relative;

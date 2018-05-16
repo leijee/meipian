@@ -59,9 +59,6 @@
 			return state.title || localStorage.getItem('title');
 		},
 		t_index: function (state) {
-
-			console.log();
-
 			return localStorage.getItem('t_index');
 		}
 	}
@@ -111,11 +108,11 @@
 		created: function () {
 			console.log('commit');
 			this.$store.commit("ADDIMGARR", []);
-			this.$store.commit('SETTITLE','');
-			this.$store.commit('CURRENTINDEX','');
+			this.$store.commit('SETTITLE', '');
+			this.$store.commit('CURRENTINDEX', '');
 			localStorage.setItem('img_index', 0);
-			localStorage.setItem('v_index',0);
-			localStorage.setItem('t_index',0);
+			localStorage.setItem('v_index', 0);
+			localStorage.setItem('t_index', 0);
 		},
 		mounted: function () {
 
@@ -146,17 +143,23 @@
 			}
 		}
 	};
-	var d_img_len = 2;
+	var d_img_len = 10;
 	//第二页
 	var SecondPage = {
 		template: '<div class="index-second" @click="hideAddFlag">\n' +
+		'            <div class="tab-bgImg" v-show="selectBgImg">\n' +
+		'               <div class="bg-item" v-for="(item,b) in bgImgArr" :key="b"  @click="selectBgImgFun(b,item.imgUrl)">\n' +
+		'                   <i :class="(b_img==b)?\'selected\':\'\'"></i>\n' +
+		'                   <img :src="item.imgUrl">\n' +
+		'               </div>\n' +
+		'            </div>' +
 		'            <div class="second-header">\n' +
-		'                <img class="bg_header" src="./imgs/bg_header1.jpg" alt="">\n' +
+		'                <img class="bg_header" :src="headBgImg" alt="">\n' +
 		'                <div class="header-content">\n' +
 		'                    <textarea placeholder="点击设置标题" :value="title" class="content-title" @click.stop="addContent(\'contentTitle\',$event)"></textarea>\n' +
 		'                    <div class="content-bottom">\n' +
 		'                        <div class="bottom-item item-addMusic"><span @click.stop="addMusicFun">添加音乐</span></div>\n' +
-		'                        <div class="bottom-item item-setBg"><span>更换封面</span></div>\n' +
+		'                        <div class="bottom-item item-setBg"><span @click="tabBgImgFun">更换封面</span></div>\n' +
 		'                    </div>\n' +
 		'                </div>\n' +
 		'            </div>\n' +
@@ -205,34 +208,34 @@
 			return {
 				activeSecond: true,
 				imgArr: [],
+				b_img:0,
 				addTopFlag: true,
 				addBottomFlag: true,
 				default_ref: '',
 				c_default_ref: '',
 				t_default_ref: '',
 				title: '',//标题
-				fromIndex:'',//来源
+				fromIndex: '',//来源
+				headBgImg: './imgs/bg_header1.jpg',//显示默认背景
+				selectBgImg:false,//选择图片
+				bgImgArr:[]
 			}
 		},
-		beforeRouteEnter:function(to,from,next){
-			console.log(from.path,'/',from.path == '/')
-			if(from.path == '/'){//首页进入
+		beforeRouteEnter: function (to, from, next) {
+			console.log(from.path, '/', from.path == '/')
+			if (from.path == '/') {//首页进入
 				this.fromIndex = '/';
-			}else{
+			} else {
 				this.fromIndex = '';
 			}
-
-			console.log('setfromIndex',this.fromIndex);
-
-			next(function(vm){
-				if(from.path == '/'){//首页进入
-					vm.fromIndex = '/';
-				}else{
-					vm.fromIndex = '';
-				}
-			});
+			if (from.path == '/') {//首页进入
+				this.fromIndex = '/';
+			} else {
+				this.fromIndex = '';
+			}
+			next();
 		},
-		beforeRouteLeave:function (to,from,next) {
+		beforeRouteLeave: function (to, from, next) {
 			this.fromIndex = '';
 			next();
 		},
@@ -245,21 +248,41 @@
 			}
 		},
 		mounted: function () {
-			console.log('this.fromIndex',this.fromIndex);
+			console.log('this.fromIndex', this.fromIndex);
 			this.imgArr = this.$store.getters.imgArrList;
+			this.headBgImg = this.imgArr[0].imgUrl;
 			this.title = this.$store.getters.title || '';
 			console.log(this.title);
 			var _this = this;
-			this.$nextTick(function(){
+			this.$nextTick(function () {
 				console.log(_this.fromIndex);
-				if(_this.fromIndex == '/'){
+				if (_this.fromIndex == '/') {
 					setTimeout(function () {
-						alert('最多可以添加'+d_img_len+'张图噢');
-					},300)
+						alert('最多可以添加' + d_img_len + '张图噢');
+					}, 300)
 				}
 			});
 		},
 		methods: {
+			//更换封面
+			tabBgImgFun:function () {
+				var _this = this;
+				this.bgImgArr = [];
+				this.imgArr.forEach(function(item){
+					if(item.type == 1){
+						_this.bgImgArr.push(item);
+					}
+				})
+				setTimeout(function(){
+					_this.selectBgImg = true;
+				},50)
+			},
+			//选择背景图片
+			selectBgImgFun:function (b_img,imgUrl) {
+				this.b_img = b_img;
+				this.headBgImg = imgUrl;
+				this.selectBgImg = false;
+			},
 			hideAddFlag: function () {
 				this.addTopFlag = true;
 				if (this.default_ref != '') {
@@ -271,27 +294,28 @@
 				}
 			},
 			hideAddBottom: function (ref, c_ref, e) {
+				console.log(ref,c_ref);
+				this.default_ref = ref;
+				this.c_default_ref = c_ref;
+				console.log(this.$refs,this.c_default_ref);
 				if (this.default_ref != '') {
-					console.log(this.$refs[this.default_ref][0]);
 					this.$refs[this.default_ref][0].style.display = 'none';
 				}
 				if (this.c_default_ref != '') {
-					console.log(this.$refs[this.c_default_ref][0])
 					this.$refs[this.c_default_ref][0].style.display = 'block';
 				}
-				this.default_ref = ref;
-				this.c_default_ref = c_ref;
 				this.addTopFlag = true;
 				e.target.style.display = 'none';
 				this.$refs[ref][0].style.display = 'block'
 			},
 			//添加文本
 			addTextFun: function (i) {
-				console.log(i);
 				this.$store.commit('EDITVALUE', '');
-				console.log(this.t_index);
 				var new_index = (this.t_index) + 1;
 				localStorage.setItem('t_index', new_index);
+
+				console.log(this.$router);
+
 				this.$router.push({
 					path: '/edit',
 					query: {
@@ -300,10 +324,17 @@
 				});
 			},
 			//切换图片url，视频url
-			tabImgFun:function(i,e){
+			tabImgFun: function (i, e) {
 				var file = e.target.files[0];
 				var imgSrc = getImgURL(file);
 				this.imgArr[i].imgUrl = imgSrc;
+				var _this = this;
+				this.imgArr.forEach(function(item){
+					if(item.type == 1){
+						_this.bgImgArr.push(item);
+					}
+				});
+				this.headBgImg = this.bgImgArr[0].imgUrl;
 				this.$store.commit('ADDIMGARR', this.imgArr);
 			},
 			//添加图片
@@ -313,6 +344,14 @@
 				var new_index = parseInt(old_index);
 
 				localStorage.setItem('img_index', new_index + 1);
+
+				var imgLen = 0;
+				this.imgArr.forEach(function (item, i) {
+					if (item.type == 1) {
+						imgLen += 1;
+					}
+				});
+
 				for (var i = 0, len = files.length; i < len; i++) {
 					var imgSrc = getImgURL(files[i]);
 					var imgObj = {
@@ -323,19 +362,15 @@
 						t_ref: 't_img' + new_index + i,
 						type: 1//1图片2文本3视频
 					};
-					arrayInsert(this.imgArr, i_index, imgObj);
-				}
-				var imgLen = 0;
-				this.imgArr.forEach(function (item,i) {
-					if(item.type == 1){
-						imgLen+=1;
+					imgLen++;
+					if(imgLen>d_img_len){
+						alert('图片张数不能超过' + d_img_len + '张');
+						break;
+					}else{
+						arrayInsert(this.imgArr, i_index, imgObj);
 					}
-				});
-				if(imgLen>d_img_len){
-					alert('图片张数不能超过'+d_img_len+'张')
-				}else{
-					this.$store.commit('ADDIMGARR', this.imgArr);
 				}
+				this.$store.commit('ADDIMGARR', this.imgArr);
 			},
 			//添加视频
 			addVideoFun: function (v_index, e) {
@@ -367,7 +402,7 @@
 					path: '/edit'
 				});
 				var value = '';
-				if(e){
+				if (e) {
 					value = e.target.value;
 				}
 				console.log();
@@ -381,12 +416,20 @@
 						len = len + 1;
 					}
 				});
+				var _this = this;
+				this.imgArr.forEach(function(item){
+					if(item.type == 1){
+						_this.bgImgArr.push(item);
+					}
+				});
+				this.headBgImg = this.bgImgArr[0].imgUrl;
 				if (len == 1) {
 					alert('至少要保留一张照片');
 				} else {
 					this.imgArr.splice(i, 1);
+					this.$store.commit('ADDIMGARR', this.imgArr);
 				}
-				this.$store.commit('ADDIMGARR', this.imgArr);
+
 			},
 			//添加音乐
 			addMusicFun: function () {
@@ -395,13 +438,13 @@
 				})
 			},
 			//点击完成，预览
-			submitContent:function () {
-				if(this.title == ''){
+			submitContent: function () {
+				if (this.title == '') {
 					alert('标题不能为空');
-					this.addContent('contentTitle','');
-				}else{
+					this.addContent('contentTitle', '');
+				} else {
 					this.$router.push({
-						path:'/review'
+						path: '/review'
 					})
 				}
 			}
@@ -700,11 +743,11 @@
 	}
 	//预览页
 	var ReviewPage = {
-		template:'<div class="index-review">\n' +
+		template: '<div class="index-review">\n' +
 		'            <div class="review-header">\n' +
-		'                <i class="head-item icon-home"></i>\n' +
-		'                <span class="head-item head-back-home">回到首页</span>\n' +
-		'                <span class="head-item head-edit">编辑</span>\n' +
+		'                <i class="head-item icon-home" @click="toBackHome"></i>\n' +
+		'                <span class="head-item head-back-home" @click="toBackHome">回到首页</span>\n' +
+		'                <span class="head-item head-edit" @click="editPage">编辑</span>\n' +
 		'            </div>\n' +
 		'            <div class="review-content">\n' +
 		'                <h3 class="review-title">设置标题</h3>\n' +
@@ -721,22 +764,39 @@
 		'                </div>\n' +
 		'            </div>\n' +
 		'        </div>',
-		beforeRouteLeave(to,from,next){
-			this.$router.push({
-				path:'/'
-			});
-		},
-		created:function () {
+		created: function () {
 			this.imgArr = this.$store.getters.imgArrList;//获取编辑后的图片，视频，文本
 			this.title = this.$store.getters.title;
 		},
-		data:function () {
+		data: function () {
 			return {
-				userInfoObj:{
-					date:'2018-05-15',
-					name:'leijee1231',
-					num:0
-				}
+				userInfoObj: {
+					date: '2018-05-15',
+					name: 'username123',
+					num: 0
+				},
+				title: '',
+				imgArr: '',
+				musicId: '',
+				musicUrl: ''
+			}
+		},
+		methods: {
+			//返回首页
+			toBackHome: function () {
+				this.$router.push({
+					path: '/'
+				})
+			},
+			//编辑页面
+			editPage: function () {
+
+				this.$store.commit('ADDIMGARR',this.imgArr);
+				this.$store.commit('SETTITLE',this.title);
+
+				this.$router.push({
+					path: '/second'
+				});
 			}
 		}
 	}
@@ -744,20 +804,21 @@
 
 	//路由设置
 	var routerObj = [
-		{path: '', component: HomePage},
+		{path: '/', component: HomePage},
 		{path: '/second', component: SecondPage},
 		{path: '/edit', component: EdiPage},
 		{path: '/music', component: MusicPage},
-		{path:'/review',component:ReviewPage},
+		{path: '/review', component: ReviewPage},
 	];
 
 	var router = new VueRouter({
-		routes: routerObj
+		routes: routerObj,
+		// mode: 'history'
 	})
 
 	//自动安装了vuex和vue-route
 	var app = new Vue({
-		router,
+		router: router,
 		store: _storeObj,
 		el: "#app",
 		data: {
@@ -797,15 +858,5 @@
 			arr.splice(i + 1, 0, item);//插入数组下标为i的后面
 		}
 	}
-	/**
-	 * 获取url参数
-	 * params name 参数key
-	 * */
-	function getQueryString(name) {
-		let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-		let r = window.location.search.substr(1).match(reg);
-		if (r != null)
-			return decodeURI(r[2]);
-		return null;
-	}
+
 })();

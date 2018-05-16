@@ -11,7 +11,7 @@ var reload = browerSync.reload;
 var distDir = './dist';
 var distJs = distDir+'/js';
 var distCss = distDir+'/css';
-var distImages = distDir+'/images';
+var distImages = distDir+'/imgs';
 var originDir = './src/';
 
 //sass转css 并且刷新浏览器
@@ -69,5 +69,5 @@ gulp.task('server',function () {
     gulp.watch(originDir+'*.html').on("change",reload);
 });
 gulp.task('dev',gulp.series(['sassToCss','server']));
-    gulp.task('build',gulp.series(['cleanDist','sassToCss','minCss','minJs','minImage','moveHtml','buildServer']));
+    gulp.task('build',gulp.series(['cleanDist','sassToCss','minCss','minJs','minImage','moveHtml']));
 
