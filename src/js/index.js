@@ -1,5 +1,5 @@
 /**
- * Created by leijee on 2018/5/12.
+ * Created by leijie on 2018/5/12.
  */
 (function () {
 	/*************store************/
@@ -90,7 +90,7 @@
 		'                </div>\n' +
 		'            </div>\n' +
 		'\n' +
-		'            <div class="home-footer">\n' +
+		'            <div class="home-footer" v-if="hideFooter">\n' +
 		'                <div class="footer-item">发现</div>\n' +
 		'                <div class="footer-item">\n' +
 		'                    <p class="btn-add">+</p>\n' +
@@ -102,7 +102,8 @@
 		data: function () {
 			return {
 				activePage: true,
-				imgArr: []
+				imgArr: [],
+				hideFooter:false
 			}
 		},
 		created: function () {
@@ -759,7 +760,7 @@
 		'                    <div class="review-item" v-for="(item,r) in imgArr" :key="r">\n' +
 		'                        <p class="item-text">{{item.c_text}}</p>\n' +
 		'                        <img v-if="item.type == 1" class="item-img" :src="item.imgUrl">\n' +
-		'                        <video v-if="item.type == 3" class="item-video" :src="item.imgUrl"></video>\n' +
+		'                        <video v-if="item.type == 3" controls class="item-video" :src="item.imgUrl"></video>\n' +
 		'                    </div>\n' +
 		'                </div>\n' +
 		'            </div>\n' +
