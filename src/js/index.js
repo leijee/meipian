@@ -107,7 +107,6 @@
 			}
 		},
 		created: function () {
-			console.log('commit');
 			this.$store.commit("ADDIMGARR", []);
 			this.$store.commit('SETTITLE', '');
 			this.$store.commit('CURRENTINDEX', '');
@@ -123,7 +122,7 @@
 				var files = e.target.files;
 				this.imgArr = [];
 				for (var i = 0, len = files.length; i < len; i++) {
-					var imgSrc = getImgURL(files[i]);
+					var imgSrc = getImgURL(files[i],this);
 					this.imgArr.push({
 						imgUrl: imgSrc,
 						c_text: '',//文本内容
@@ -832,7 +831,8 @@
 	});
 
 	//获取图片的url
-	function getImgURL(file) {
+	function getImgURL(file,_this,callback) {
+		var _this = _this;
 		var url = null;
 		// 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已
 		if (window.createObjectURL != undefined) { // basic
@@ -842,6 +842,22 @@
 		} else if (window.webkitURL != undefined) { // webkit or chrome
 			url = window.webkitURL.createObjectURL(file);
 		}
+
+
+		if(_this){
+			var fileData = new FormData();
+			fileData.append('file', file)
+			console.log('fileData=',file,fileData);
+			_this.$http.post('http://www.lvman.net/upload/kindeditorJson?rename=1',fileData).then(function(res){
+				console.log(res);
+				if(callback){
+					callback();
+				}
+			}).catch(function(err){
+				console.log('上传失败');
+			})
+		}
+
 		return url;
 	}
 
