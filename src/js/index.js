@@ -16,6 +16,7 @@
 		alert(res.errMsg);
 	});
 
+	var hostUrl = location.protocol+'//www.lvman.net';//文件上传后的地址
 
 	/*************store************/
 	var state = {
@@ -168,7 +169,7 @@
 		'                   <img :src="item.imgUrl">\n' +
 		'               </div>\n' +
 		'            </div>' +
-		'            <div class="second-header">\n' +
+		'            <div v-show="isShowHead" class="second-header">\n' +
 		'                <img class="bg_header" :src="headBgImg" alt="">\n' +
 		'                <div class="header-content">\n' +
 		'                    <textarea placeholder="点击设置标题" :value="title" class="content-title" @click.stop="addContent(\'contentTitle\',$event)"></textarea>\n' +
@@ -179,7 +180,7 @@
 		'                </div>\n' +
 		'            </div>\n' +
 		'            <div class="second-body">\n' +
-		'                <div class="body-item" v-for="(item,i) in imgArr" :key="i">\n' +
+		'                <div class="body-item" v-for="(item,i) in imgArr">\n' +
 		'                    <div class="first-item" v-if="i == 0">\n' +
 		'                        <div class="addItem topItem" @click.stop="addTopFlag=false" v-show="addTopFlag">+</div>\n' +
 		'                        <div class="add-content" v-show="!addTopFlag">\n' +
@@ -191,6 +192,8 @@
 		'                        </div>\n' +
 		'                    </div>\n' +
 		'                    <div class="item-content">\n' +
+		'						 <i v-if="i!=0" class="icon-arrow-top" @click.stop="changeImgIndex(i,0,imgArr.length)"></i>\n'+
+		'						 <i v-if="i!=imgArr.length-1" class="icon-arrow-bottom" @click.stop="changeImgIndex(i,1,imgArr.length)"></i>\n'+
 		'                        <i class="close" @click="removeCurrentFun(i,item.type)"></i>\n' +
 		'                        <div class="item-left">\n' +
 		'                            <img class="left-item" v-if="item.type!=3" :src="item.imgUrl" alt="">\n' +
@@ -215,7 +218,7 @@
 		'                    </div>\n' +
 		'                </div>\n' +
 		'            </div>\n' +
-		'            <div class="second-footer" @click="submitContent">\n' +
+		'            <div class="second-footer" @click.stop="submitContent">\n' +
 		'                <p class="s-footer-text">完成</p>\n' +
 		'            </div>\n' +
 		'        </div>',
@@ -224,6 +227,7 @@
 				activeSecond: true,
 				imgArr: [],
 				b_img:0,
+                isShowHead:false,//是否显示头部
 				addTopFlag: true,
 				addBottomFlag: true,
 				default_ref: '',
@@ -279,6 +283,26 @@
 			});
 		},
 		methods: {
+			changeImgIndex:function(i,type,len){
+				console.log(i,type,len);
+				var temp1 = null;
+				var temp2 = null;
+				console.log(1111,this.imgArr);
+				var _this = this;
+				
+				var newArr = this.imgArr;
+				
+				setTimeout(function(){
+					if(len>1){
+						if(type == 0){//下标往前移动
+							 swapItems(_this.imgArr, i, i - 1);
+						}else{//下标往后移动
+							 swapItems(_this.imgArr, i, i + 1);
+						}
+						_this.$store.commit('ADDIMGARR', newArr);
+					}
+				},100);
+			},
 			//更换封面
 			tabBgImgFun:function () {
 				var _this = this;
@@ -341,7 +365,7 @@
 			//切换图片url，视频url
 			tabImgFun: function (i, e) {
 				var file = e.target.files[0];
-				var imgSrc = getImgURL(file);
+				var imgSrc = getImgURL(file,this);
 				this.imgArr[i].imgUrl = imgSrc;
 				var _this = this;
 				this.imgArr.forEach(function(item){
@@ -357,57 +381,78 @@
 				var files = e.target.files;
 				var old_index = localStorage.getItem('img_index') || 0;
 				var new_index = parseInt(old_index);
-
 				localStorage.setItem('img_index', new_index + 1);
-
 				var imgLen = 0;
 				this.imgArr.forEach(function (item, i) {
 					if (item.type == 1) {
 						imgLen += 1;
 					}
 				});
-
-				for (var i = 0, len = files.length; i < len; i++) {
-					var imgSrc = getImgURL(files[i]);
-					var imgObj = {
-						imgUrl: imgSrc,
-						c_text: '',//文本内容
-						ref: 'img' + new_index + i,
-						c_ref: 'c_img' + new_index + i,
-						t_ref: 't_img' + new_index + i,
-						type: 1//1图片2文本3视频
-					};
-					imgLen++;
-					if(imgLen>d_img_len){
-						alert('图片张数不能超过' + d_img_len + '张');
-						break;
-					}else{
-						arrayInsert(this.imgArr, i_index, imgObj);
+				var _this = this;
+				chooseImage(6,_this,function(imgList){
+					for (var i = 0, len = imgList.length; i < len; i++) {
+						var imgSrc = imgList.ids;
+						var imgObj = {
+							imgUrl: imgSrc,
+							c_text: '',//文本内容
+							ref: 'img' + new_index + i,
+							c_ref: 'c_img' + new_index + i,
+							t_ref: 't_img' + new_index + i,
+							type: 1//1图片2文本3视频
+						};
+						imgLen++;
+						if(imgLen>d_img_len){
+							alert('图片张数不能超过' + d_img_len + '张');
+							break;
+						}else{
+							arrayInsert(newArr, i_index, imgObj);
+						}
 					}
-				}
-				this.$store.commit('ADDIMGARR', this.imgArr);
+					_this.$store.commit('ADDIMGARR', newArr);
+				})
+				// for (var i = 0, len = files.length; i < len; i++) {
+				// 	var imgSrc = getImgURL(files[i],this);
+				// 	var imgObj = {
+				// 		imgUrl: imgSrc,
+				// 		c_text: '',//文本内容
+				// 		ref: 'img' + new_index + i,
+				// 		c_ref: 'c_img' + new_index + i,
+				// 		t_ref: 't_img' + new_index + i,
+				// 		type: 1//1图片2文本3视频
+				// 	};
+				// 	imgLen++;
+				// 	if(imgLen>d_img_len){
+				// 		alert('图片张数不能超过' + d_img_len + '张');
+				// 		break;
+				// 	}else{
+				// 		arrayInsert(this.imgArr, i_index, imgObj);
+				// 	}
+				// }
+				// this.$store.commit('ADDIMGARR', this.imgArr);
 			},
-			//添加视频
+			//选择视频
 			addVideoFun: function (v_index, e) {
-				console.log('添加图片', v_index, e);
+				console.log('添加视频', v_index, e);
 				var files = e.target.files;
 				var old_index = localStorage.getItem('v_index') || 0;
 				var new_index = parseInt(old_index);
 				console.log(files);
 				localStorage.setItem('v_index', new_index + 1);
+				var _this = this;
 				for (var i = 0, len = files.length; i < len; i++) {
-					var imgSrc = getImgURL(files[i]);
-					var imgObj = {
-						imgUrl: imgSrc,
-						c_text: '',//文本内容
-						ref: 'video' + new_index + i,
-						c_ref: 'c_video' + new_index + i,
-						t_ref: 't_video' + new_index + i,
-						type: 3//1图片2文本3视频
-					};
-					this.imgArr.splice(v_index + 1, 0, imgObj);
+					getVideoURL(files[i],_this,function(imgSrc){
+						var imgObj = {
+							imgUrl: imgSrc,
+							c_text: '',//文本内容
+							ref: 'video' + new_index + i,
+							c_ref: 'c_video' + new_index + i,
+							t_ref: 't_video' + new_index + i,
+							type: 3//1图片2文本3视频
+						};
+						_this.imgArr.splice(v_index + 1, 0, imgObj);
+						_this.$store.commit('ADDIMGARR', _this.imgArr);
+					});
 				}
-				this.$store.commit('ADDIMGARR', this.imgArr);
 			},
 			//添加内容
 			addContent: function (index, e) {
@@ -458,14 +503,34 @@
 					alert('标题不能为空');
 					this.addContent('contentTitle', '');
 				} else {
+					var jsonStr = JSON.stringify(this.imgArr);
+                    
+                    this.commitJSONHtml(jsonStr,this.imgArr);//提交html片段和json数据
+                    
 					this.$router.push({
 						path: '/review'
-					})
+					});
 				}
-			}
+			},
+            commitJSONHtml:function(jsonStr,imgArr){
+
+				var listStr = '';
+				for(var i=0,len=imgArr.length;i<len;i++){
+					listStr+='<div class="review-item">' +
+								'<p class="item-text">'+imgArr[i].c_text+'</p>' +
+								'<img class="item-img" src="'+imgArr[i].imgSrc+'">' +
+							'</div>';
+				}
+				var htmlStr = '<div class="review-list">+listStr+</div>';//提交html片段
+				var jsonObj = jsonStr;//提交的json字符串
+
+				//点击完成，提交数据
+				this.$http.post(hostUrl,{htmlStr:htmlStr,jsonObj:jsonObj}).then(function(res){
+					console.log('html片段和json提交成功',res);
+				});
+            }
 		}
 	};
-
 	//文本编辑
 	var EdiPage = {
 		template: '<div class="index-edit">\n' +
@@ -554,6 +619,7 @@
 						this.$store.commit('ADDIMGARR', this.imgArr);
 					}
 				}
+            
 				var _this = this;
 				setTimeout(function () {
 					_this.$router.push({
@@ -563,6 +629,10 @@
 			}
 		}
 	};
+     function swapItems(arr, index1, index2) {
+        arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+        return arr;
+    };
 	//选择音乐
 	var MusicPage = {
 		template: '<div class="index-music">\n' +
@@ -845,6 +915,7 @@
 		methods: {}
 	});
 
+
 	//获取图片的url
 	function getImgURL(file,_this,callback) {
 		var _this = _this;
@@ -857,25 +928,65 @@
 		} else if (window.webkitURL != undefined) { // webkit or chrome
 			url = window.webkitURL.createObjectURL(file);
 		}
-
-
-		if(_this){
-			var fileData = new FormData();
-			fileData.append('file', file)
-			console.log('fileData=',file,fileData);
-			_this.$http.post('http://www.lvman.net/upload/kindeditorJson?rename=1',fileData).then(function(res){
-				console.log(res);
-				if(callback){
-					callback();
-				}
-			}).catch(function(err){
-				console.log('上传失败');
-			})
-		}
-
 		return url;
 	}
+	function chooseImage(count, callback) {
+		wx.chooseImage({
+			count: count, // 默认6
+			sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+			sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+			success: function (res) {
+				var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+				syncUpload(localIds, callback);
+			}
+		});
+	}
+	var _wxImg = [];
+	/**
+	 * 上传图片并保存本地服务器
+	 * @param localIds 数量
+	 * @param resultCallBack 回调方法
+	 */
+	function syncUpload(localIds, resultCallBack) {
+		var localId = localIds.pop();
 
+		wx.uploadImage({
+			localId: localId,
+			isShowProgressTips: 1,
+			success: function (res) {
+				var serverId = res.serverId; // 返回图片的服务器端ID
+				_wxImg.push(saveImg(serverId));
+				//其他对serverId做处理的代码
+				if (localIds.length > 0) {
+					syncUpload(localIds, resultCallBack);
+				}else{
+					resultCallBack(_wxImg);
+					_wxImg = [];
+				}
+			}
+		});
+	};
+
+
+
+	//上传视频
+	function getVideoURL(file,_this,callback){
+		var _this = _this;
+		var url = null;
+		if(_this){
+			var fileData = new FormData();
+			fileData.append('file', file);
+			console.log('fileData=',file,fileData);
+			_this.$http.post(hostUrl+'/upload/kindeditorJson?rename=1',fileData).then(function(res){
+				url = hostUrl+res.body.path;
+				console.log(res);
+				console.log(url);
+				if(callback){
+					callback(url);
+				}
+			});
+		}
+	}
 	/**
 	 * 数组指定位置插入数据
 	 * @param arr 当前数组

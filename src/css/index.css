@@ -265,6 +265,25 @@ body {
           background: #fff;
           border-radius: 0.2rem;
           border: 1px solid #dfe2e9; }
+          .page-index .index-second .second-body .body-item .item-content .icon-arrow-top,
+          .page-index .index-second .second-body .body-item .item-content .icon-arrow-bottom {
+            position: absolute;
+            right: 0.2rem;
+            z-index: 3;
+            content: " ";
+            display: inline-block;
+            height: 6px;
+            width: 6px;
+            border-width: 2px 2px 0 0;
+            border-color: #c8c8cd;
+            border-style: solid;
+            transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0); }
+          .page-index .index-second .second-body .body-item .item-content .icon-arrow-top {
+            top: 0.4rem;
+            transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0) rotate(-90deg); }
+          .page-index .index-second .second-body .body-item .item-content .icon-arrow-bottom {
+            bottom: 0.4rem;
+            transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0) rotate(90deg); }
           .page-index .index-second .second-body .body-item .item-content .close {
             position: absolute;
             left: 0.3rem;
@@ -325,10 +344,10 @@ body {
             height: 100%; }
             .page-index .index-second .second-body .body-item .item-content .item-right .right-item {
               position: absolute;
-              right: 0;
+              right: 0.6rem;
               top: 0.7rem;
               padding: 0.18rem 0.2rem 0.2rem 0.2rem;
-              width: 9.8rem;
+              width: 8.6rem;
               height: 3rem;
               overflow: hidden;
               color: #cbcdd9;

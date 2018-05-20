@@ -80,60 +80,60 @@
                 <div class="footer-item">我的</div>
             </div>
         </div>
-        <div class="index-second" @click="hideAddFlag" v-show="activeSecond">
-            <div class="second-header">
-                <img class="bg_header" src="./imgs/bg_header1.jpg" alt="">
-                <div class="header-content">
-                    <textarea placeholder="点击设置标题"  class="content-title" ref="contentTitle" @click.stop="addContent('contentTitle',$event)"></textarea>
-                    <div class="content-bottom">
-                        <div class="bottom-item item-addMusic"><span @click.stop="addMusicFun">添加音乐</span></div>
-                        <div class="bottom-item item-setBg"><span>更换封面</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="second-body">
-                <div class="body-item" v-for="(item,i) in imgArr" :key="i">
-                    <div class="first-item" v-if="i == 0">
-                        <div class="addItem topItem" @click.stop="addTopFlag=false" v-show="addTopFlag">+</div>
-                        <div class="add-content" v-show="!addTopFlag">
-                            <span class="icon-text"></span>
-                            <span class="icon-img"></span>
-                            <span class="icon-video"></span>
-                        </div>
-                    </div>
-                    <div class="item-content">
-                        <i class="close" @click="removeCurrentFun(i,item.type)"></i>
-                        <div class="item-left">
-                            <img class="left-item" :src="item.imgUrl" alt="">
-                        </div>
-                        <div class="item-right">
-                            <textarea placeholder="点击添加文字" class="right-item" @click="addContent(item.t_ref,$event)" :ref="item.t_ref">
+        <!--<div class="index-second" @click="hideAddFlag" v-show="activeSecond">-->
+            <!--<div class="second-header">-->
+                <!--<img class="bg_header" src="./imgs/bg_header1.jpg" alt="">-->
+                <!--<div class="header-content">-->
+                    <!--<textarea placeholder="点击设置标题"  class="content-title" ref="contentTitle" @click.stop="addContent('contentTitle',$event)"></textarea>-->
+                    <!--<div class="content-bottom">-->
+                        <!--<div class="bottom-item item-addMusic"><span @click.stop="addMusicFun">添加音乐</span></div>-->
+                        <!--<div class="bottom-item item-setBg"><span>更换封面</span></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="second-body">-->
+                <!--<div class="body-item" v-for="(item,i) in imgArr" :key="i">-->
+                    <!--<div class="first-item" v-if="i == 0">-->
+                        <!--<div class="addItem topItem" @click.stop="addTopFlag=false" v-show="addTopFlag">+</div>-->
+                        <!--<div class="add-content" v-show="!addTopFlag">-->
+                            <!--<span class="icon-text"></span>-->
+                            <!--<span class="icon-img"></span>-->
+                            <!--<span class="icon-video"></span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="item-content">-->
+                        <!--<i class="close" @click="removeCurrentFun(i,item.type)"></i>-->
+                        <!--<div class="item-left">-->
+                            <!--<img class="left-item" :src="item.imgUrl" alt="">-->
+                        <!--</div>-->
+                        <!--<div class="item-right">-->
+                            <!--<textarea placeholder="点击添加文字" class="right-item" @click="addContent(item.t_ref,$event)" :ref="item.t_ref">-->
 
-                            </textarea>
-                        </div>
-                    </div>
-                    <div class="addItem" :ref="item.c_ref" @click.stop="hideAddBottom(item.ref,item.c_ref,$event)" v-if="addBottomFlag+'i'">+</div>
-                    <div class="add-content" :ref="item.ref">
-                        <span class="icon-text" @click.stop="addTextFun"></span>
-                        <span class="icon-img" @click.stop="addImgFun"></span>
-                        <span class="icon-video" @click.stop="addVideoFun"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="second-footer">
-                <p class="s-footer-text">完成</p>
-            </div>
-        </div>
+                            <!--</textarea>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="addItem" :ref="item.c_ref" @click.stop="hideAddBottom(item.ref,item.c_ref,$event)" v-if="addBottomFlag+'i'">+</div>-->
+                    <!--<div class="add-content" :ref="item.ref">-->
+                        <!--<span class="icon-text" @click.stop="addTextFun"></span>-->
+                        <!--<span class="icon-img" @click.stop="addImgFun"></span>-->
+                        <!--<span class="icon-video" @click.stop="addVideoFun"></span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="second-footer">-->
+                <!--<p class="s-footer-text">完成</p>-->
+            <!--</div>-->
+        <!--</div>-->
 
-        <div class="index-edit" v-if="activeEdit">
-            <textarea class="edit-content"  @focus="focusFun" @blur.passive="blurFun" v-model="editValue"  ref="editObj" @input="editFun">
+        <!--<div class="index-edit" v-if="activeEdit">-->
+            <!--<textarea class="edit-content"  @focus="focusFun" @blur.passive="blurFun" v-model="editValue"  ref="editObj" @input="editFun">-->
 
-            </textarea>
-            <div class="edit-num">{{textNum}}/{{maxNum}}</div>
-            <div class="edit-btn" v-if="showSubmit">
-                <span class="btn-submit" @click.stop="submitEdit">完成</span>
-            </div>
-        </div>
+            <!--</textarea>-->
+            <!--<div class="edit-num">{{textNum}}/{{maxNum}}</div>-->
+            <!--<div class="edit-btn" v-if="showSubmit">-->
+                <!--<span class="btn-submit" @click.stop="submitEdit">完成</span>-->
+            <!--</div>-->
+        <!--</div>-->
 
         <div class="index-review" :class="d_img==b?'selected':''" v-if="activeReview">
             <div class="review-header">
@@ -158,11 +158,6 @@
                     </div>
                 </div>
             </div>
-            <v-alert :a_title="a_title"
-                     :a_content="a_content"
-                     :showAlert="showAlert"
-                     :sureFun="sureFun"
-                     :cancelFun="cancelFun"></v-alert>
         </div>
 
 
