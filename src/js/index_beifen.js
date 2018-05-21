@@ -64,7 +64,7 @@
         el:'#app',
         data:{
             activePage:false,//首页
-            activeSecond:false,//第二页
+            activeSecond:true,//第二页
             activeEdit:false,//编辑
             activeMusic:false,//添加音乐
 	        activeReview:false,//预览页

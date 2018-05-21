@@ -212,6 +212,29 @@ body{
                     border-radius: px(10);
                     border:1px solid #dfe2e9;
 
+                    .icon-arrow-top,
+                    .icon-arrow-bottom{
+                        position: absolute;
+                        right:px(10);
+                        z-index: 3;
+                        content: " ";
+                        display: inline-block;
+                        height: 6px;
+                        width: 6px;
+                        border-width: 2px 2px 0 0;
+                        border-color: #c8c8cd;
+                        border-style: solid;
+                        transform: matrix(.71,.71,-.71,.71,0,0);
+
+                    }
+                    .icon-arrow-top{
+                        top:px(20);
+                        transform: matrix(.71,.71,-.71,.71,0,0) rotate(-90deg);
+                    }
+                    .icon-arrow-bottom{
+                        bottom:px(20);
+                        transform: matrix(.71,.71,-.71,.71,0,0) rotate(90deg);
+                    }
                     .close {
                         position: absolute;
                         left:px(15);
@@ -283,10 +306,10 @@ body{
 
                         .right-item{
                             position: absolute;
-                            right:0;
+                            right:px(30);
                             top:px(35);
                             padding: px(9) px(10) px(10) px(10);
-                            width: px(490);
+                            width: px(430);
                             height:px(150);
                             overflow: hidden;
                             color: #cbcdd9;
